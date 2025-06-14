@@ -1,0 +1,13 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Categories=Graphics
+Name[en_US]=Pinokio
+Exec=/home/cristian/.local/bin/Pinokio.AppImage
+Icon=/home/cristian/repos/dotfiles/appimages/pinokio.png
+Icon[en_US]=/home/cristian/repos/dotfiles/appimages/pinokio.png
+Comment[en_US]=AI Image Generation
+Name=Pinokio
+Comment=AI Image Generation
