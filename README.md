@@ -86,7 +86,8 @@
    - [debian-hybrid](https://github.com/khimaros/debian-hybrid) - auto-pinning of security fixes from unstable
 6. After the above decision has been made and system / sources are up-to-date, explicitly get newer kernel from backports / unstable
 7. If applicable, deal with [NVIDIA drivers](https://wiki.debian.org/NvidiaGraphicsDrivers)
-8. Get [Firefox](https://support.mozilla.org/en-US/kb/install-firefox-linux) via Mozilla repo
+8. Deal with [Hardware Video Acceleration](https://wiki.debian.org/HardwareVideoAcceleration)
+9. Get [Firefox](https://support.mozilla.org/en-US/kb/install-firefox-linux) via Mozilla repo
 
 ## GNOME Extensions
 
