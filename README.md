@@ -113,11 +113,12 @@
 ## fstab Backup
 
 ```shell
-PARTUUID=e961b51d-eda2-471d-810b-8441643ce622   /efi                          vfat    umask=0077                    0 2
-PARTUUID=ac90a78d-4a45-48ab-b4f1-94a3f56fb6a1   none                          swap    sw                            0 0
-PARTUUID=90a7437c-e228-4261-9258-693d6552b88f   /                             xfs     defaults,noatime              0 1
-PARTUUID=e8365781-cac0-49a2-86c3-4ab23e69bc60   /home/cristian/second-drive   ext4    defaults,noatime              0 2
+PARTUUID=e961b51d-eda2-471d-810b-8441643ce622   /efi                          vfat    umask=0077		    0 2
+PARTUUID=ac90a78d-4a45-48ab-b4f1-94a3f56fb6a1   none                          swap    sw			    0 0
+PARTUUID=90a7437c-e228-4261-9258-693d6552b88f   /                             xfs     defaults,noatime		    0 1
+PARTUUID=e8365781-cac0-49a2-86c3-4ab23e69bc60   /home/cristian/second-drive   ext4    defaults,noatime		    0 2
 UUID=7E88-53D4                                  /mnt/Tank                     exfat   umask=0000,defaults,nofail    0 2
+UUID=676D-F75A                                  /mnt/Oldman                   exfat   umask=0000,defaults,nofail    0 2
 ```
 
 ## LazyVim Config Backup
