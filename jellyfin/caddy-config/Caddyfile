@@ -1,0 +1,3 @@
+example.url.com
+
+reverse_proxy local.ip.address:8096
