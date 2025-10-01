@@ -1,0 +1,46 @@
+services:
+  jellyfin:
+    image: jellyfin/jellyfin
+    restart: "unless-stopped"
+    container_name: jellyfin
+    network_mode: "host"
+    volumes:
+      # Create these directories next to docker-compose.yml,
+      # gives Jellyfin a place to put its stuff
+      - ./jellyfin-config:/config
+      - ./jellyfin-cache:/cache
+      # Add mounted drives / media here
+      - type: bind
+        source: /mnt/Example
+        target: /Example
+    # NVIDIA hardware acceleration
+    runtime: nvidia
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    environment:
+      - JELLYFIN_PublishedServerUrl=https://example.url.com
+    # For Docker health checks
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  # Host via Caddy reverse proxy
+  caddy:
+    image: caddy:2.10.2
+    restart: unless-stopped
+    container_name: caddy
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./caddy-config:/etc/caddy
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  caddy_data:
+  caddy_config:
