@@ -88,7 +88,7 @@
 - UBlock Origin
 - Privacy Badger
 - Bitwarden
-- XBrowserSync
+- floccus
 - SponsorBlock
 - DeArrow
 - Better TTV
