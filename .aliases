@@ -1,3 +1,5 @@
+alias c="clear && fastfetch"
+
 # .zshrc
 alias zshc="vim $HOME/.zshrc"
 alias zshr="source $HOME/.zshrc"
