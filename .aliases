@@ -1,28 +1,25 @@
-##### GENERAL #####
-
 # .zshrc
 alias zshc="vim $HOME/.zshrc"
 alias zshr="source $HOME/.zshrc"
+
+# Flatpak
+alias pkgfl="flatpak update -y"
+alias pkgflcl="flatpak uninstall --unused --noninteractive"
 
 # tmux
 alias tmu="tmux new-session -swiden -nshell"
 alias tkill="tmux kill-server"
 
-##### UPDATE SYSTEM #####
-
-# flatpak
-alias pkgfl="flatpak update -y && flatpak uninstall --unused --noninteractive"
-
-# Lazyvim
-alias pkgnv="nvim --headless \"+Lazy! sync\" +qa"
-
-##### .NET #####
+# .NET stuff
+alias dot="dotnet clean && dotnet build"
+alias dcs="csharpier format"
 
 # Global tools:
 # - csharpier
 # - dotnet-outdated
+# - git-credential-manager
 # - report generator
-alias pkgdn="dotnet tool update -g csharpier && dotnet tool update -g dotnet-outdated-tool && dotnet tool update -g dotnet-reportgenerator-globaltool"
+alias pkgdn="dotnet tool update -g csharpier && dotnet tool update -g dotnet-outdated-tool && dotnet tool update -g git-credential-manager && dotnet tool update -g dotnet-reportgenerator-globaltool"
 
-alias dot="dotnet clean && dotnet build"
-alias dcs="csharpier format"
+# Lazyvim updates (not using currently)
+# alias pkgnv="nvim --headless \"+Lazy! sync\" +qa"
