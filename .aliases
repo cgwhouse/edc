@@ -25,4 +25,4 @@ alias pkgnv="nvim --headless \"+Lazy! sync\" +qa"
 alias pkgdn="dotnet tool update -g csharpier && dotnet tool update -g dotnet-outdated-tool && dotnet tool update -g dotnet-reportgenerator-globaltool"
 
 alias dot="dotnet clean && dotnet build"
-alias dcs="dotnet csharpier"
+alias dcs="csharpier format"
