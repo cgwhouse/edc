@@ -1,8 +1,5 @@
-##### GENERAL #####
-
-export EDITOR="vim"
-
-# .NET Telemetry + "polling file watcher" thing
+# .NET
+export PATH="$PATH:$HOME/.dotnet/tools"
 export DOTNET_CLI_TELEMETRY_OPTOUT=true
 export DOTNET_USE_POLLING_FILE_WATCHER=1
 
@@ -14,21 +11,3 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
-# Android SDK
-export ANDROID_HOME="$HOME/Android/Sdk"
-
-##### PATH #####
-
-# .local/bin
-export PATH="$PATH:$HOME/.local/bin"
-
-# .NET global tools
-export PATH="$PATH:$HOME/.dotnet/tools"
-
-# (Doom) Emacs
-export PATH="$PATH:$HOME/.config/emacs/bin"
-
-# Android SDK + Flutter
-export PATH="$PATH:$ANDROID_HOME/cmdline-tools/latest/bin"
-export PATH="$PATH:$ANDROID_HOME/platform-tools"
-export PATH="$PATH:$HOME/flutter/bin"
