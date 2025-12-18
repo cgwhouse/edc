@@ -73,22 +73,6 @@
 }
 ```
 
-## Debian Setup Guide
-
-1. Create installation media using latest stable Debian `netinst`
-2. Perform standard (i.e. not minimal, pick a desktop environment) install
-   - Guided partitioning is sufficient. Before accepting final partition settings, Change root filesystem type to BTRFS
-   - If laptop, do encryption (will take awhile if disk is old)
-3. Once at the desktop, add `main contrib non-free` to sources and ensure system is up-to-date
-4. Follow [this guide](https://github.com/david-cortes/snapper-in-debian-guide) to set up automated snapshotting
-5. Decide whether this machine will be stable + backports, or testing-unstable mix. If the latter, read the following, and install `apt-listbugs` and `apt-listchanges`:
-   - [DebianUnstable](https://wiki.debian.org/DebianUnstable) - contains an example `20-tum.conf`
-   - [debian-hybrid](https://github.com/khimaros/debian-hybrid) - auto-pinning of security fixes from unstable
-6. After the above decision has been made and system / sources are up-to-date, explicitly get newer kernel from backports / unstable
-7. If applicable, deal with [NVIDIA drivers](https://wiki.debian.org/NvidiaGraphicsDrivers)
-8. Deal with [Hardware Video Acceleration](https://wiki.debian.org/HardwareVideoAcceleration)
-9. Get [Firefox](https://support.mozilla.org/en-US/kb/install-firefox-linux) via Mozilla repo
-
 ## GNOME Extensions
 
 - [Alphabetical App Grid](https://extensions.gnome.org/extension/4269/alphabetical-app-grid/)
