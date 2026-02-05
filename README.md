@@ -97,12 +97,50 @@
 ## fstab Backup
 
 ```shell
-PARTUUID=e961b51d-eda2-471d-810b-8441643ce622   /efi                          vfat    umask=0077		    0 2
-PARTUUID=ac90a78d-4a45-48ab-b4f1-94a3f56fb6a1   none                          swap    sw			    0 0
-PARTUUID=90a7437c-e228-4261-9258-693d6552b88f   /                             xfs     defaults,noatime		    0 1
-PARTUUID=e8365781-cac0-49a2-86c3-4ab23e69bc60   /home/cristian/second-drive   ext4    defaults,noatime		    0 2
-UUID=7E88-53D4                                  /mnt/Tank                     exfat   umask=0000,defaults,nofail    0 2
-UUID=676D-F75A                                  /mnt/Oldman                   exfat   umask=0000,defaults,nofail    0 2
+PARTUUID=90a7437c-e228-4261-9258-693d6552b88f /                           xfs   defaults,noatime           0 1
+PARTUUID=e961b51d-eda2-471d-810b-8441643ce622 /efi                        vfat  umask=0077                 0 2
+PARTUUID=ac90a78d-4a45-48ab-b4f1-94a3f56fb6a1 none                        swap  sw                         0 0
+PARTUUID=e8365781-cac0-49a2-86c3-4ab23e69bc60 /home/cristian/second-drive ext4  defaults,noatime           0 2
+UUID=7E88-53D4                                /mnt/Tank                   exfat umask=0000,defaults,nofail 0 2
+UUID=676D-F75A                                /mnt/Oldman                 exfat umask=0000,defaults,nofail 0 2
+```
+
+## 3D Acceleration with KVM + NVIDIA
+
+```text
+# /etc/libvirt/qemu.conf
+
+cgroup_device_acl = [
+  "/dev/null", "/dev/full", "/dev/zero",
+  "/dev/random", "/dev/urandom",
+  "/dev/ptmx", "/dev/kvm",
+  "/dev/nvidiactl", "/dev/nvidia0", "/dev/nvidia-modeset", "/dev/dri/renderD128"
+]
+seccomp_sandbox = 0
+```
+
+Then, restart the libvirtd service and run the following:
+
+```shell
+sudo virt-xml VM NAME --add-device --graphics egl-headless,gl.rendernode=/dev/dri/renderD128
+```
+
+## Vim Escape with 'jk'
+
+```vimscript
+" Add to $HOME/.vimrc
+
+" Map key chord `jk` to <Esc>.
+let g:esc_j_lasttime = 0
+let g:esc_k_lasttime = 0
+function! JKescape(key)
+  if a:key=='j' | let g:esc_j_lasttime = reltimefloat(reltime()) | endif
+  if a:key=='k' | let g:esc_k_lasttime = reltimefloat(reltime()) | endif
+  let l:timediff = abs(g:esc_j_lasttime - g:esc_k_lasttime)
+  return (l:timediff <= 0.05 && l:timediff >=0.001) ? "\b\e" : a:key
+endfunction
+inoremap <expr> j JKescape('j')
+inoremap <expr> k JKescape('k')
 ```
 
 ## LazyVim Config Backup
@@ -126,7 +164,7 @@ To drop a file from host into VM when virtiofs not available, create ISO and the
 mkisofs -o <output file name>.iso <target file>
 ```
 
-Dealing with `.bin` and `.cue` files, using [Bioscopia]() as an example:
+Dealing with `.bin` and `.cue` files, using Bioscopia as an example:
 
 1. Convert CD1 .bin and .cue to .iso using:
 
