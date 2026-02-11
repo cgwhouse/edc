@@ -153,7 +153,7 @@ sudo mv /usr/libexec/elogind/system-sleep/nvidia.sh /usr/libexec/elogind/backup/
 
 Then, edit `/etc/elogind/sleep.conf` to include the following:
 
-```plaintext
+```text
 AllowSuspend=yes
 SuspendByUsing=/usr/bin/zzz
 HibernateByUsing=/usr/bin/ZZZ
