@@ -143,6 +143,22 @@ inoremap <expr> j JKescape('j')
 inoremap <expr> k JKescape('k')
 ```
 
+## Suspend w/ Void Linux + NVIDIA + Plasma + Wayland
+
+First, do this (and repeat each time the `nvidia` pkg is updated):
+
+```shell
+sudo mv /usr/libexec/elogind/system-sleep/nvidia.sh /usr/libexec/elogind/backup/
+```
+
+Then, edit `/etc/elogind/sleep.conf` to include the following:
+
+```plaintext
+AllowSuspend=yes
+SuspendByUsing=/usr/bin/zzz
+HibernateByUsing=/usr/bin/ZZZ
+```
+
 ## LazyVim Config Backup
 
 ```lua
