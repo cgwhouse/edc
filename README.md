@@ -159,7 +159,10 @@ SuspendByUsing=/usr/bin/zzz
 HibernateByUsing=/usr/bin/ZZZ
 ```
 
-## BTRFS By Hand (for Snapshots)
+## BTRFS / Snapshots
+
+See if we can completely omit the below and just follow the David Cortes guide.
+Maybe we still care about the initramfs module, maybe we don't!
 
 1. After doing `mkfs`, mount the partition the standard way, then create subvolumes:
 
@@ -178,7 +181,7 @@ HibernateByUsing=/usr/bin/ZZZ
    ```
 
 3. Ensure no `subvolid=` bits in `/etc/fstab`
-4. If using `mkinitcpio`, add the `btrfs` module
+4. Ensure the `btrfs` module in initramfs
 5. `snapper-support` and `btrfs-assistant` on Arch
 
 ## LazyVim Config Backup
