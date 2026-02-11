@@ -143,7 +143,7 @@ inoremap <expr> j JKescape('j')
 inoremap <expr> k JKescape('k')
 ```
 
-## Suspend w/ Void Linux + NVIDIA + Plasma + Wayland
+## Suspend w/ Void Linux + NVIDIA + KDE Plasma
 
 First, do this (and repeat each time the `nvidia` pkg is updated):
 
