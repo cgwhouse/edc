@@ -159,6 +159,28 @@ SuspendByUsing=/usr/bin/zzz
 HibernateByUsing=/usr/bin/ZZZ
 ```
 
+## BTRFS By Hand (for Snapshots)
+
+1. After doing `mkfs`, mount the partition the standard way, then create subvolumes:
+
+   ```shell
+   btrfs su cr /mnt/@
+   btrfs su cr /mnt/@home
+   btrfs su cr /mnt/@log
+   ```
+
+2. Unmount, then re-mount the new subvolumes:
+
+   ```shell
+   mount -o subvol=/@,defaults,noatime,compress=zstd /dev/??? /mnt
+   mount -o subvol=/@home,defaults,noatime,compress=zstd -m /dev/??? /mnt/home
+   mount -o subvol=/@log,defaults,noatime,compress=zstd -m /dev/??? /mnt/var/log
+   ```
+
+3. Ensure no `subvolid=` bits in `/etc/fstab`
+4. If using `mkinitcpio`, add the `btrfs` module
+5. `snapper-support` and `btrfs-assistant` on Arch
+
 ## LazyVim Config Backup
 
 ```lua
