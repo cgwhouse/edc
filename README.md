@@ -161,28 +161,17 @@ HibernateByUsing=/usr/bin/ZZZ
 
 ## BTRFS / Snapshots
 
-See if we can completely omit the below and just follow the David Cortes guide.
-Maybe we still care about the initramfs module, maybe we don't!
+After doing `mkfs`, mount the partition the standard way, then create root subvolume:
 
-1. After doing `mkfs`, mount the partition the standard way, then create subvolumes:
+```shell
+btrfs su cr /mnt/@rootfs
+```
 
-   ```shell
-   btrfs su cr /mnt/@
-   btrfs su cr /mnt/@home
-   btrfs su cr /mnt/@log
-   ```
+Unmount, then re-mount the new subvolume:
 
-2. Unmount, then re-mount the new subvolumes:
-
-   ```shell
-   mount -o subvol=/@,defaults,noatime,compress=zstd /dev/??? /mnt
-   mount -o subvol=/@home,defaults,noatime,compress=zstd -m /dev/??? /mnt/home
-   mount -o subvol=/@log,defaults,noatime,compress=zstd -m /dev/??? /mnt/var/log
-   ```
-
-3. Ensure no `subvolid=` bits in `/etc/fstab`
-4. Ensure the `btrfs` module in initramfs
-5. `snapper-support` and `btrfs-assistant` on Arch
+```shell
+mount -o defaults,subvol=/@rootfs /dev/??? /mnt
+```
 
 ## LazyVim Config Backup
 
