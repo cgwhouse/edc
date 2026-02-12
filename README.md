@@ -143,6 +143,36 @@ inoremap <expr> j JKescape('j')
 inoremap <expr> k JKescape('k')
 ```
 
+## Suspend w/ Void Linux + NVIDIA + KDE Plasma
+
+First, do this (and repeat each time the `nvidia` pkg is updated):
+
+```shell
+sudo mv /usr/libexec/elogind/system-sleep/nvidia.sh /usr/libexec/elogind/backup/
+```
+
+Then, edit `/etc/elogind/sleep.conf` to include the following:
+
+```text
+AllowSuspend=yes
+SuspendByUsing=/usr/bin/zzz
+HibernateByUsing=/usr/bin/ZZZ
+```
+
+## BTRFS / Snapshots
+
+After doing `mkfs`, mount the partition the standard way, then create root subvolume:
+
+```shell
+btrfs su cr /mnt/@rootfs
+```
+
+Unmount, then re-mount the new subvolume:
+
+```shell
+mount -o defaults,subvol=/@rootfs /dev/??? /mnt
+```
+
 ## LazyVim Config Backup
 
 ```lua
