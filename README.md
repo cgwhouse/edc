@@ -161,6 +161,8 @@ HibernateByUsing=/usr/bin/ZZZ
 
 ## BTRFS / Snapshots
 
+Guide which can be followed for all distributions, as long as root subvolume is created as `@rootfs`: [snapper-in-debian-guide](https://github.com/david-cortes/snapper-in-debian-guide)
+
 After doing `mkfs`, mount the partition the standard way, then create root subvolume:
 
 ```shell
@@ -171,6 +173,65 @@ Unmount, then re-mount the new subvolume:
 
 ```shell
 mount -o defaults,subvol=/@rootfs /dev/??? /mnt
+```
+
+### Void
+
+Void requires several extra, manual steps.
+
+If we can't login to the desktop after setting up the @tmp subvolume, check permissions of `/tmp` with `ls -ld /tmp`. Anything other than `drwxrwxrwt` is wrong. Fix with:
+
+```shell
+sudo chmod 1777 /tmp
+sudo chown root:root /tmp
+```
+
+#### Manual snapper-rollback
+
+To use `snapper-rollback`, we need to install the `btrfsutils` Python library. First install `libbtrfsutil-devel`. Then, set up venv:
+
+```shell
+sudo mkdir -p /opt/btrfs-tools/venv
+sudo python3 -m venv /opt/btrfs-tools/venv
+sudo /opt/btrfs-tools/venv/bin/pip install --upgrade pip
+sudo /opt/btrfs-tools/venv/bin/pip install btrfsutil
+```
+
+Update the shebang in `snapper-rollback.py`:
+
+```python
+#!/opt/btrfs-tools/venv/bin/python3
+import btrfsutil
+```
+
+#### Manual btrfs-assistant
+
+The btrfs-assistant GUI will need to be built from source, Ubuntu instructions can be roughly followed:
+
+```text
+1. Install the prerequisites: `sudo apt install git cmake fonts-noto qt6-base-dev qt6-base-dev-tools g++ libbtrfs-dev libbtrfsutil-dev pkexec qt6-svg-dev qt6-tools-dev`
+2. Download the tar.gz from the latest version [here](https://gitlab.com/btrfs-assistant/btrfs-assistant/-/tags)
+3. Untar the archive and cd into the directory
+4. `cmake -B build -S . -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE='Release'`
+5. `make -C build`
+6. `sudo make -C build install`
+```
+
+We may need to append `-DCMAKE_CXX_FLAGS="$CMAKE_CXX_FLAGS -Wno-error=deprecated-declarations"` to the cmake step to get it to build.
+
+#### Alias suggestions
+
+Lastly, xbps doesn't have any support for hooks, so we'll have to manually create snapshots before modifying system packages. Something like these aliases may help:
+
+```shell
+# Pre and Post snapshots for updates
+alias pkgup="sudo snapper create --command 'sudo xbps-install -Su'"
+
+# Pre snapshots for installing new packages
+alias pkgin="sudo snapper create --cleanup-algorithm timeline && sudo xbps-install "
+
+# Pre snapshots for removing packages
+alias pkgun="sudo snapper create --cleanup-algorithm timeline && sudo xbps-remove -R "
 ```
 
 ## LazyVim Config Backup
