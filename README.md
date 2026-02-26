@@ -128,9 +128,9 @@ sudo virt-xml VM NAME --add-device --graphics egl-headless,gl.rendernode=/dev/dr
 ## Vim Escape with 'jk'
 
 ```vimscript
-source $VIMRUNTIME/defaults.vim
+" $HOME/.vimrc
 
-" Add to $HOME/.vimrc
+source $VIMRUNTIME/defaults.vim
 
 " Map key chord `jk` to <Esc>.
 let g:esc_j_lasttime = 0
