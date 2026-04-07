@@ -145,6 +145,25 @@ inoremap <expr> j JKescape('j')
 inoremap <expr> k JKescape('k')
 ```
 
+## Backports for Desktop Debian
+
+- Kernel + headers
+- Firmware
+- Pipewire
+- CPU Microcode
+- Flatpak
+- Filesystem utils
+
+## APT Pinning Example
+
+```text
+# /etc/apt/preferences.d/99-nvidia
+
+Package: *
+Pin: origin "developer.download.nvidia.com"
+Pin-Priority: 1001
+```
+
 ## Suspend w/ Void Linux + NVIDIA + KDE Plasma
 
 First, do this (and repeat each time the `nvidia` pkg is updated):
