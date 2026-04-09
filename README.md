@@ -255,6 +255,20 @@ alias pkgin="sudo snapper create --cleanup-algorithm timeline && sudo xbps-insta
 alias pkgun="sudo snapper create --cleanup-algorithm timeline && sudo xbps-remove -R "
 ```
 
+## Firewall Config
+
+```shell
+# Deny all incoming traffic to the host by default
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+
+# Allow SSH so you don't lock yourself out
+sudo ufw allow ssh
+
+# Enable the firewall
+sudo ufw enable
+```
+
 ## LazyVim Config Backup
 
 ```lua
