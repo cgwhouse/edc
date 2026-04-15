@@ -269,6 +269,82 @@ sudo ufw allow ssh
 sudo ufw enable
 ```
 
+## Unbound with Cloudflare Upstream
+
+```text
+server:
+    # If no logfile is specified, syslog is used
+    # logfile: "/var/log/unbound/unbound.log"
+    verbosity: 0
+
+    interface: 127.0.0.1
+    port: 5335
+    do-ip4: yes
+    do-udp: yes
+    do-tcp: yes
+
+    # May be set to no if you don't have IPv6 connectivity
+    do-ip6: yes
+
+    # You want to leave this to no unless you have *native* IPv6.
+    prefer-ip6: no
+
+    # Trust glue only if it is within the server's authority
+    harden-glue: yes
+
+    # Require DNSSEC data for trust-anchored zones, if such data is absent, the zone becomes BOGUS
+    harden-dnssec-stripped: yes
+
+    # Don't use Capitalization randomization as it known to cause DNSSEC issues sometimes
+    use-caps-for-id: no
+
+    # Reduce EDNS reassembly buffer size.
+    edns-buffer-size: 1232
+
+    # Perform prefetching of close to expired message cache entries
+    prefetch: yes
+
+    # One thread should be sufficient, can be increased on beefy machines.
+    num-threads: 1
+
+    # Ensure kernel buffer is large enough to not lose messages in traffic spikes
+    so-rcvbuf: 1m
+
+    # Ensure privacy of local IP ranges
+    private-address: 192.168.0.0/16
+    private-address: 169.254.0.0/16
+    private-address: 172.16.0.0/12
+    private-address: 10.0.0.0/8
+    private-address: fd00::/8
+    private-address: fe80::/10
+
+    # Ensure no reverse queries to non-public IP ranges (RFC6303 4.2)
+    private-address: 192.0.2.0/24
+    private-address: 198.51.100.0/24
+    private-address: 203.0.113.0/24
+    private-address: 255.255.255.255/32
+    private-address: 2001:db8::/32
+
+    # --- HYBRID CONFIGURATION ADDITION ---
+    # Point Unbound to the system's root certificates to verify the TLS connection
+    tls-cert-bundle: "/etc/ssl/certs/ca-certificates.crt"
+
+# --- UPSTREAM FORWARDING RULES ---
+forward-zone:
+    # The "." means "all queries"
+    name: "."
+    # Enable DNS-over-TLS
+    forward-tls-upstream: yes
+    
+    # Cloudflare Primary and Secondary IPv4
+    forward-addr: 1.1.1.1@853#cloudflare-dns.com
+    forward-addr: 1.0.0.1@853#cloudflare-dns.com
+    
+    # Cloudflare Primary and Secondary IPv6 (Included since do-ip6 is 'yes')
+    forward-addr: 2606:4700:4700::1111@853#cloudflare-dns.com
+    forward-addr: 2606:4700:4700::1001@853#cloudflare-dns.com
+```
+
 ## LazyVim Config Backup
 
 ```lua
