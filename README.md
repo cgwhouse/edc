@@ -269,6 +269,15 @@ sudo ufw allow ssh
 sudo ufw enable
 ```
 
+## SSH Config Example
+
+```plaintext
+Host some-aliases-for-host
+    HostName ip-or-dns-goes-here
+    User username-to-ssh-with
+    IdentityFile path/to/id
+```
+
 ## Unbound with Cloudflare Upstream
 
 ```text
