@@ -272,7 +272,8 @@ sudo ufw enable
 ## SSH Config Example
 
 ```plaintext
-Host some-aliases-for-host
+# Reminder: .ssh directory needs 700 permissions, key files need 600
+Host some-alias-for-host
     HostName ip-or-dns-goes-here
     User username-to-ssh-with
     IdentityFile path/to/id
