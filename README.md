@@ -107,6 +107,8 @@ UUID=676D-F75A                                /mnt/Oldman                 exfat 
 
 ## 3D Acceleration with KVM + NVIDIA
 
+The [Arch Wiki](https://wiki.archlinux.org/title/Libvirt#EGL_NOT_INITIALIZED_error) now documents how to deal with this, the below will likely be removed in the future.
+
 ```text
 # /etc/libvirt/qemu.conf
 
