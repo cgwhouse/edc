@@ -198,6 +198,17 @@ Unmount, then re-mount the new subvolume:
 mount -o defaults,subvol=/@rootfs /dev/??? /mnt
 ```
 
+### Creating a subvolume for VM images
+
+```shell
+sudo btrfs subvolume create /btrfsroot/@libvirt_images
+sudo chattr +C /btrfsroot/@libvirt_images
+sudo rm -rf /var/lib/libvirt/images
+sudo mkdir -p /var/lib/libvirt/images
+
+### Add to fstab, following same patterns that should already be in there ### 
+```
+
 ### Void
 
 Void requires several extra, manual steps.
