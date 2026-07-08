@@ -206,66 +206,29 @@ sudo chattr +C /btrfsroot/@libvirt_images
 sudo rm -rf /var/lib/libvirt/images
 sudo mkdir -p /var/lib/libvirt/images
 
-### Add to fstab, following same patterns that should already be in there ### 
+### Add to fstab, following same patterns that should already be in there ###
 ```
 
-### Void
+## ZFS
 
-Void requires several extra, manual steps.
-
-If we can't login to the desktop after setting up the @tmp subvolume, check permissions of `/tmp` with `ls -ld /tmp`. Anything other than `drwxrwxrwt` is wrong. Fix with:
+Some useful commands:
 
 ```shell
-sudo chmod 1777 /tmp
-sudo chown root:root /tmp
-```
+# Creating a snapshot, using default Void Linux pool setup as an example
+sudo zfs snapshot zroot/ROOT/void@pre-upgrade-$(date +%F)
 
-#### Manual snapper-rollback
+# Deleting a snapshot
+sudo zfs destroy zroot/ROOT/void@name-of-snapshot
 
-To use `snapper-rollback`, we need to install the `btrfsutils` Python library. First install `libbtrfsutil-devel`. Then, set up venv:
+# Deleting a boot environment
+sudo zfs destroy -R zroot/ROOT/void
 
-```shell
-sudo mkdir -p /opt/btrfs-tools/venv
-sudo python3 -m venv /opt/btrfs-tools/venv
-sudo /opt/btrfs-tools/venv/bin/pip install --upgrade pip
-sudo /opt/btrfs-tools/venv/bin/pip install btrfsutil
-```
+# Renaming a boot environment
+sudo zfs rename zroot/ROOT/void-clone zroot/ROOT/void
 
-Update the shebang in `snapper-rollback.py`:
-
-```python
-#!/opt/btrfs-tools/venv/bin/python3
-import btrfsutil
-```
-
-#### Manual btrfs-assistant
-
-The btrfs-assistant GUI will need to be built from source, Ubuntu instructions can be roughly followed:
-
-```text
-1. Install the prerequisites: `sudo apt install git cmake fonts-noto qt6-base-dev qt6-base-dev-tools g++ libbtrfs-dev libbtrfsutil-dev pkexec qt6-svg-dev qt6-tools-dev`
-2. Download the tar.gz from the latest version [here](https://gitlab.com/btrfs-assistant/btrfs-assistant/-/tags)
-3. Untar the archive and cd into the directory
-4. `cmake -B build -S . -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE='Release'`
-5. `make -C build`
-6. `sudo make -C build install`
-```
-
-We may need to append `-DCMAKE_CXX_FLAGS="$CMAKE_CXX_FLAGS -Wno-error=deprecated-declarations"` to the cmake step to get it to build.
-
-#### Alias suggestions
-
-Lastly, xbps doesn't have any support for hooks, so we'll have to manually create snapshots before modifying system packages. Something like these aliases may help:
-
-```shell
-# Pre and Post snapshots for updates
-alias pkgup="sudo snapper create --command 'sudo xbps-install -Su'"
-
-# Pre snapshots for installing new packages
-alias pkgin="sudo snapper create --cleanup-algorithm timeline && sudo xbps-install "
-
-# Pre snapshots for removing packages
-alias pkgun="sudo snapper create --cleanup-algorithm timeline && sudo xbps-remove -R "
+# Listing boot environments and snapshots
+zfs list -r zroot/ROOT
+zfs list -t snapshot -r zroot/ROOT
 ```
 
 ## Firewall Config
@@ -358,11 +321,11 @@ forward-zone:
     name: "."
     # Enable DNS-over-TLS
     forward-tls-upstream: yes
-    
+
     # Cloudflare Primary and Secondary IPv4
     forward-addr: 1.1.1.1@853#cloudflare-dns.com
     forward-addr: 1.0.0.1@853#cloudflare-dns.com
-    
+
     # Cloudflare Primary and Secondary IPv6 (Included since do-ip6 is 'yes')
     forward-addr: 2606:4700:4700::1111@853#cloudflare-dns.com
     forward-addr: 2606:4700:4700::1001@853#cloudflare-dns.com
