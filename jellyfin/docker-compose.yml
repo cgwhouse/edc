@@ -26,7 +26,7 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
   caddy:
-    image: caddy:2.11.3
+    image: caddy:2.11.4
     restart: unless-stopped
     container_name: caddy
     networks:
