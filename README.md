@@ -331,6 +331,29 @@ forward-zone:
     forward-addr: 2606:4700:4700::1001@853#cloudflare-dns.com
 ```
 
+## Improve NTP Resiliency for Power Outages
+
+```text
+# Comment out the pool lines
+# pool pool.ntp.org iburst
+
+# Add static IPs (e.g., Google Time)
+server 216.239.35.0 iburst
+server 216.239.35.4 iburst
+```
+
+## Ensure Media Drive is Mounted Before Starting Docker Daemon
+
+After executing `sudo systemctl edit docker.service`, apply the following:
+
+```ini
+[Unit]
+Requires=mnt-<name of drive>.mount
+After=mnt-<name of drive>.mount
+```
+
+Where `<name of drive>` is based on what's in fstab.
+
 ## LazyVim Config Backup
 
 ```lua
@@ -414,3 +437,5 @@ set-option -a terminal-features 'xterm-256color:RGB'
 `sudo chown -R username:username absolute-path-to-folder`
 
 `sudo grub-mkconfig -o /boot/grub/grub.cfg`
+
+`fsck.ext4 -y /dev/???`
