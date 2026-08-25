@@ -103,6 +103,9 @@ UUID=???                                      /???/???                    ext4  
 # HDDs
 UUID=7E88-53D4                                /mnt/Tank                   exfat umask=0000,defaults,nofail 0 2
 UUID=676D-F75A                                /mnt/Oldman                 exfat umask=0000,defaults,nofail 0 2
+
+# SELinux / openSUSE version of the above
+UUID=7E88-53D4                                /mnt/Tank                   exfat uid=1000,gid=1000,umask=022,context="system_u:object_r:container_file_t:s0",defaults,nofail 0 2
 ```
 
 ## 3D Acceleration with KVM + NVIDIA
