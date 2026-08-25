@@ -7,8 +7,10 @@ services:
       - jellyfin-network
     volumes:
       # Create these directories next to this file
+      # Add :z to the end if SELinux / openSUSE
       - ./jellyfin-config:/config
       - ./jellyfin-cache:/cache
+      # Update path(s) here as well
       - type: bind
         source: /mnt/Example
         target: /Example
