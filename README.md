@@ -353,6 +353,11 @@ After executing `sudo systemctl edit docker.service`, apply the following:
 [Unit]
 Requires=mnt-<name of drive>.mount
 After=mnt-<name of drive>.mount
+
+# On openSUSE, I also needed these lines for networking to work within a VM.
+# I think I also had to install iptables-backend-nft
+[Service]
+ExecStartPost=/usr/sbin/iptables -P FORWARD ACCEPT
 ```
 
 Where `<name of drive>` is based on what's in fstab.
