@@ -124,12 +124,6 @@ cgroup_device_acl = [
 ]
 ```
 
-Then, restart the libvirtd service and run the following:
-
-```shell
-sudo virt-xml VM NAME --add-device --graphics egl-headless,gl.rendernode=/dev/dri/renderD128
-```
-
 ## Vim Escape with 'jk'
 
 ```vimscript
