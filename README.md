@@ -397,6 +397,12 @@ Where `<name of drive>` is based on what's in fstab.
    sudo sdbootutil add-kernel $(uname -r)
    ```
 
+## Fix cursor size in Bolt
+
+Discovered on openSUSE with Niri, may apply to other distros or window manager setups, and may fix other applications built on CEF.
+
+Add these flags to the .desktop entry, making local copy in `.local/share`: `--enable-features=UseOzonePlatform --ozone-platform=wayland`
+
 ## LazyVim Config Backup
 
 ```lua
