@@ -362,6 +362,41 @@ ExecStartPost=/usr/sbin/iptables -P FORWARD ACCEPT
 
 Where `<name of drive>` is based on what's in fstab.
 
+## Custom Plymouth Theme on openSUSE
+
+1. Download theme from github and put the theme folder alongside the other Plymouth themes
+2. Install `plymouth-plugin-script`, `plymouth-plugin-label`, and `plymouth-plugin-label-ft`
+3. Execute the following, using catppuccin-mocha as an example:
+
+   ```shell
+   sudo plymouth-set-default-theme -R catppuccin-mocha
+
+   # Probably same thing as update-alternatives, just manual:
+   sudo ln -sf /usr/share/plymouth/themes/catppuccin-mocha/catppuccin-mocha.plymouth /usr/share/plymouth/themes/default.plymouth
+   ```
+
+4. Create `/etc/dracut.conf.d/plymouth.conf` (I think a couple of these paths are wrong, double check them):
+
+   ```text
+   add_dracutmodules+=" plymouth "
+   install_items+=" /usr/lib64/plymouth/script.so /usr/lib64/plymouth/label.so /usr/lib64/plymouth/label-ft.so "
+   ```
+
+5. Create `/etc/dracut.conf.d/nvidia.conf` (Early KMS loading):
+
+   ```text
+   add_drivers+=" nvidia nvidia_modeset nvidia_uvm nvidia_drm "
+   ```
+
+6. Add `plymouth.theme=catppuccin-mocha` to `/etc/kernel/cmdline`
+7. Execute the following:
+
+   ```shell
+   sudo dracut -f
+   sudo sdbootutil remove-kernel $(uname -r)
+   sudo sdbootutil add-kernel $(uname -r)
+   ```
+
 ## LazyVim Config Backup
 
 ```lua
