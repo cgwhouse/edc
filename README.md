@@ -155,6 +155,8 @@ inoremap <expr> k JKescape('k')
 
 ## APT Pinning Example
 
+"Any package that the NVIDIA repos provide, I want to be considered at a higher priority than any equivalent Debian package."
+
 ```text
 # /etc/apt/preferences.d/99-nvidia
 
