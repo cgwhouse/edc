@@ -110,18 +110,18 @@ UUID=7E88-53D4                                /mnt/Tank                   exfat 
 
 ## 3D Acceleration with KVM + NVIDIA
 
-The [Arch Wiki](https://wiki.archlinux.org/title/Libvirt#EGL_NOT_INITIALIZED_error) now documents how to deal with this, the below will likely be removed in the future.
+The [Arch Wiki](https://wiki.archlinux.org/title/Libvirt#EGL_NOT_INITIALIZED_error) now documents how to deal with this. When dealing with cgroup_device_acl in the config file, make sure that in addition to whatever the commented out default contains, and whatever the Arch wiki says, these are present too. On openSUSE, the defaults in the config file were missing /dev/kvm and others, which made me unable to boot a VM until added:
 
 ```text
 # /etc/libvirt/qemu.conf
 
 cgroup_device_acl = [
-  "/dev/null", "/dev/full", "/dev/zero",
-  "/dev/random", "/dev/urandom",
-  "/dev/ptmx", "/dev/kvm",
-  "/dev/nvidiactl", "/dev/nvidia0", "/dev/nvidia-modeset", "/dev/dri/renderD128"
+    "/dev/null", "/dev/full", "/dev/zero",
+    "/dev/random", "/dev/urandom",
+    "/dev/ptmx", "/dev/kvm", "/dev/kqemu",
+    "/dev/rtc","/dev/hpet", "/dev/sev",
+    "/dev/dri/renderD128" 
 ]
-seccomp_sandbox = 0
 ```
 
 Then, restart the libvirtd service and run the following:
