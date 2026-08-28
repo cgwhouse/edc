@@ -6,7 +6,7 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - STGUIADDRESS=
+      - STGUIADDRESS=0.0.0.0:8384
     volumes:
       - $HOME/st-sync:/var/syncthing
     network_mode: host
