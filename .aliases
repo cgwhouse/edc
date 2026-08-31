@@ -21,7 +21,8 @@ alias dcs="csharpier format"
 # - dotnet-outdated
 # - git-credential-manager
 # - report generator
-alias pkgdn="dotnet tool update -g csharpier && dotnet tool update -g dotnet-outdated-tool && dotnet tool update -g git-credential-manager && dotnet tool update -g dotnet-reportgenerator-globaltool"
+# - ef
+alias pkgdn="dotnet tool update -g csharpier && dotnet tool update -g dotnet-outdated-tool && dotnet tool update -g git-credential-manager && dotnet tool update -g dotnet-reportgenerator-globaltool && dotnet tool update -g dotnet-ef"
 
 # Lazyvim updates (not using currently)
 # alias pkgnv="nvim --headless \"+Lazy! sync\" +qa"
