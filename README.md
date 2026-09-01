@@ -206,6 +206,12 @@ sudo rm -rf /var/lib/libvirt/images
 sudo mkdir -p /var/lib/libvirt/images
 
 ### Add to fstab, following same patterns that should already be in there ###
+
+### If a nested subvolume structure is already in place (and /var is one of the subvolumes): ###
+sudo mkdir -p /var/lib/libvirt
+sudo rm -rf /var/lib/libvirt/images
+sudo btrfs subvolume create /var/lib/libvirt/images
+sudo chattr +C /var/lib/libvirt/images
 ```
 
 ## ZFS
