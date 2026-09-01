@@ -399,6 +399,20 @@ Discovered on openSUSE with Niri, may apply to other distros or window manager s
 
 Add these flags to the .desktop entry, making local copy in `.local/share`: `--enable-features=UseOzonePlatform --ozone-platform=wayland`
 
+## Setting refresh rate of a monitor during early boot
+
+See what displays are available:
+
+```shell
+grep -H "^connected$" /sys/class/drm/*/status
+```
+
+Append a kernel argument as follows:
+
+```text
+video=<connector>:<width>x<height>@<refresh_rate>
+```
+
 ## LazyVim Config Backup
 
 ```lua
@@ -482,5 +496,7 @@ set-option -a terminal-features 'xterm-256color:RGB'
 `sudo chown -R username:username absolute-path-to-folder`
 
 `sudo grub-mkconfig -o /boot/grub/grub.cfg`
+
+`sdbootutil update-all-entries`
 
 `fsck.ext4 -y /dev/???`
