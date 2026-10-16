@@ -416,6 +416,56 @@ Append a kernel argument as follows:
 video=<connector>:<width>x<height>@<refresh_rate>
 ```
 
+## Distrobox stuff
+
+```shell
+# Create container with its own home directory (Debian 13 as example)
+# Prefer toolbox images where possible
+distrobox create --name dev --image quay.io/toolbx-images/debian-toolbox:13 --home ~/example/directory
+
+# Create .desktop entry for something installed in container, add --delete to clean it up
+distrobox-export --app code
+
+# General pattern for symlinking stuff from host home into container home
+ln -s "$DISTROBOX_HOST_HOME/<path>" ~/<path>
+
+# OMZ
+ZSH="$HOME/.oh-my-zsh" <usual oh-my-zsh install command goes here>"
+```
+
+## Nerd Fonts
+
+```ini
+# ~/.config/systemd/user/nerd-fonts-update.service
+[Unit]
+Description=Update Nerd Fonts
+After=network-online.target
+
+[Service]
+Type=oneshot
+
+# Needed because the getnf installer writes a temp file to the current dir
+WorkingDirectory=%T
+
+ExecStartPre=/usr/bin/bash -c 'curl -fsSL https://raw.githubusercontent.com/getnf/getnf/main/install.sh | bash -s -- --silent'
+ExecStart=%h/.local/bin/getnf -U
+ExecStartPost=/usr/bin/fc-cache -f
+```
+
+```ini
+# ~/.config/systemd/user/nerd-fonts-update.timer
+[Unit]
+Description=Weekly Nerd Fonts update
+
+[Timer]
+OnCalendar=weekly
+Persistent=true
+RandomizedDelaySec=1h
+
+[Install]
+WantedBy=timers.target
+```
+
 ## LazyVim Config Backup
 
 ```lua
