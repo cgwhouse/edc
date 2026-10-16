@@ -148,10 +148,7 @@ inoremap <expr> k JKescape('k')
 
 - Kernel + headers
 - Firmware
-- Pipewire
-- CPU Microcode
-- Flatpak
-- Filesystem utils
+- Mesa
 
 ## APT Pinning Example
 
